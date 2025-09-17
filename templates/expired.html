@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Expired Food</title>
+
+  <!-- ✅ Internal CSS -->
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: url("https://img.freepik.com/premium-vector/city-garbage-containers-closeup-view-with-trash-urban-waste-management-concept_1310786-35133.jpg?w=2000");
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .result-box {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      width: 90%;
+      max-width: 500px;
+      border: 2px solid #fed7d7;
+    }
+
+    h2 {
+      color: #c53030;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      color: #2d3748;
+    }
+
+    b {
+      color: #2f855a;
+      font-weight: 700;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #3182ce;
+      color: white;
+      padding: 0.7rem 1.2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.2s ease-in-out;
+    }
+    .btn:hover {
+      background: #2b6cb0;
+    }
+  </style>
+</head>
+<body>
+  <div class="result-box">
+    <h2 id="warning-text">{{ item.name }} is expired ❌</h2>
+    <p>You can use it for: <b id="suggestion-text">{{ suggestion }}</b></p>
+    <a href="{{ url_for('dashboard') }}" class="btn">Back</a>
+  </div>
+
+  <!-- ✅ Text-to-Speech -->
+  <script>
+    window.addEventListener('load', () => {
+      const warningText = document.getElementById('warning-text').innerText;
+      const suggestionText = document.getElementById('suggestion-text').innerText;
+      
+      if ('speechSynthesis' in window) {
+        // Speak warning first
+        const warningUtterance = new SpeechSynthesisUtterance(warningText);
+        warningUtterance.lang = 'en-US';
+        warningUtterance.rate = 1;
+
+        // Speak suggestion after warning
+        const suggestionUtterance = new SpeechSynthesisUtterance("You can use it for " + suggestionText);
+        suggestionUtterance.lang = 'en-US';
+        suggestionUtterance.rate = 1;
+
+        // Queue them
+        warningUtterance.onend = () => {
+          window.speechSynthesis.speak(suggestionUtterance);
+        };
+
+        window.speechSynthesis.speak(warningUtterance);
+      } else {
+        console.log("Text-to-Speech not supported in this browser.");
+      }
+    });
+  </script>
+</body>
+</html>

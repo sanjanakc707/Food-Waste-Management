@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Food Waste Solution</title>
+
+  <!-- ✅ Internal CSS -->
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: url("https://img.freepik.com/premium-photo/compost-kitchen-waste-recycling-throwing-food-leftovers-into-garbage-trash-bin_366165-2071.jpg");
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    .container {
+      text-align: center;
+      background: white;
+      padding: 2.5rem;
+      border-radius: 16px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 500px;
+    }
+
+    h1 {
+      color: #2f855a;
+      margin-bottom: 2rem;
+      font-size: 2rem;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #38a169;
+      color: white;
+      padding: 0.8rem 1.5rem;
+      margin: 0.5rem;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: background 0.3s ease-in-out;
+    }
+
+    .btn:hover {
+      background: #2f855a;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🌍 Reimagine Food Waste: From Expiry to Agriculture</h1>
+    <a href="{{ url_for('login') }}" class="btn">Login</a>
+    <a href="{{ url_for('signup') }}" class="btn">Sign Up</a>
+  </div>
+</body>
+</html>

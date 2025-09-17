@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard</title>
+
+  <!-- ✅ Internal CSS -->
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-image: url("https://img.freepik.com/premium-photo/compost-kitchen-waste-recycling-throwing-food-leftovers-into-garbage-trash-bin_366165-2071.jpg");
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .container {
+      background: white;
+      margin-top: 2rem;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 90%;
+      max-width: 600px;
+    }
+
+    h2 {
+      text-align: center;
+      color: #2f855a;
+      margin-bottom: 1rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      margin-bottom: 2rem;
+    }
+
+    input[type="text"],
+    input[type="date"] {
+      padding: 0.7rem;
+      border: 1px solid #cbd5e0;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+
+    button {
+      background: #2f855a;
+      color: white;
+      padding: 0.7rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover {
+      background: #276749;
+    }
+
+    h3 {
+      margin-top: 1.5rem;
+      color: #2c5282;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin-top: 1rem;
+    }
+
+    li {
+      background: #edf2f7;
+      margin: 0.5rem 0;
+      padding: 0.7rem;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .btn-small {
+      background: #3182ce;
+      color: white;
+      padding: 0.3rem 0.7rem;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+    .btn-small:hover {
+      background: #2b6cb0;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 1rem;
+      background: #e53e3e;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .btn:hover {
+      background: #c53030;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Welcome, {{ session['username'] }} 👋</h2>
+
+    <form method="POST">
+      <input type="text" name="name" placeholder="Food name" required>
+      <input type="date" name="expiry_date" required>
+      <button type="submit">Add Food</button>
+    </form>
+
+    <h3>Your Food Items:</h3>
+    <ul>
+      {% for item in items %}
+        <li>
+          {{ item.name }} - Expiry: {{ item.expiry_date }}
+          <a href="{{ url_for('food_status', item_id=item.id) }}" class="btn-small">Check Status</a>
+        </li>
+      {% endfor %}
+    </ul>
+
+    <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+  </div>
+</body>
+</html>

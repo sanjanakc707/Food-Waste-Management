@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fresh Food</title>
+
+  <!-- ✅ Internal CSS -->
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: url("https://img.freepik.com/premium-vector/city-garbage-containers-closeup-view-with-trash-urban-waste-management-concept_1310786-35133.jpg?w=2000");
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .result-box {
+      background: white;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      max-width: 500px;
+      width: 90%;
+      border: 2px solid #c6f6d5;
+    }
+
+    h2 {
+      color: #2f855a;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      color: #2d3748;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #38a169;
+      color: white;
+      padding: 0.7rem 1.2rem;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: background 0.2s ease-in-out;
+    }
+
+    .btn:hover {
+      background: #2f855a;
+    }
+  </style>
+</head>
+<body>
+  <div class="result-box">
+    <h2 id="fresh-text">{{ item.name }} is fresh ✅</h2>
+    <p id="suggestion-text">Suggestions: Use it in your daily meals or store properly.</p>
+    <a href="{{ url_for('dashboard') }}" class="btn">Back</a>
+  </div>
+
+  <!-- ✅ Text-to-Speech -->
+  <script>
+    window.addEventListener('load', () => {
+      const freshText = document.getElementById('fresh-text').innerText;
+      const suggestionText = document.getElementById('suggestion-text').innerText;
+
+      if ('speechSynthesis' in window) {
+        const freshUtterance = new SpeechSynthesisUtterance(freshText);
+        freshUtterance.lang = 'en-US';
+        freshUtterance.rate = 1;
+
+        const suggestionUtterance = new SpeechSynthesisUtterance(suggestionText);
+        suggestionUtterance.lang = 'en-US';
+        suggestionUtterance.rate = 1;
+
+        // Speak suggestion after the freshness message
+        freshUtterance.onend = () => {
+          window.speechSynthesis.speak(suggestionUtterance);
+        };
+
+        window.speechSynthesis.speak(freshUtterance);
+      } else {
+        console.log("Text-to-Speech not supported in this browser.");
+      }
+    });
+  </script>
+</body>
+</html>
